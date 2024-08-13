@@ -1,0 +1,15 @@
+dist
+.DS_Store
+node_modules
+coverage
+components.d.ts
+temp
+TODOs.md
+*.log
+.idea
+.eslintcache
+cache
+types
+report
+.temp
+html
