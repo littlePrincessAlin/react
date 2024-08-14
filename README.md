@@ -3,7 +3,6 @@
 一个 monorepo 的 react 仓库
 > 公共依赖
 * react18
-* react-dom18
 * react-router6
 * 公共utils工具方法
 * css处理
