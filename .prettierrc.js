@@ -1,3 +1,4 @@
+// 代码美化
 module.exports = {
   printWidth: 80, // 代码行宽
   tabWidth: 2, // 空格缩进

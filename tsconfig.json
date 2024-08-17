@@ -1,0 +1,31 @@
+{
+  "include": ["packages/**/*"],
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true, // 启用es模块化交互，可以引入哪些使用非es导出的模块
+    "jsx": "react", // 如何处理js语法
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": false, // 允许在ts中引入js文件
+    "pretty": true,
+    "noEmitOnError": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "strictPropertyInitialization": false,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true, // 跳过对声明文件的类型检查
+    "skipDefaultLibCheck": true,
+    "inlineSourceMap": true,
+    "importHelpers": true,
+    "moduleResolution": "node"
+  },
+  "lib": [
+    "dom"
+  ],
+  "exclude": [
+    "node_modules*"
+  ]
+}

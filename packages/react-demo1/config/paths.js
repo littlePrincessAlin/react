@@ -28,11 +28,12 @@ const resolveModule = (resolveFn, filePath) => {
 
   return resolveFn(`${filePath}.js`);
 };
-
+console.log('appIndexJsx', resolveModule(resolveApp, 'src/index'));
 module.exports = {
   appHtml: resolveApp('public/index.html'),
   appIndexJsx: resolveModule(resolveApp, 'src/index'),
   appBuild: resolveApp('dist'),
+  appSrc: resolveApp('src'),
   components: resolveApp('src/components'),
   pages: resolveApp('src/pages'),
   utils: resolveApp('src/utils'),

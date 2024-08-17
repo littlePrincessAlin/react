@@ -8,26 +8,32 @@ const postcssNormalize = require('postcss-normalize');
 
 module.exports = function (webpackEnv) {
   console.log('当前环境', webpackEnv);
+  console.log('paths.pages', paths.pages);
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const cssRegex = /\.css$/;
-  const cssModuleRegex = /\.css$/;
+  const cssModuleRegex = /\.module\.css$/i;
   const sassRegex = /\.(scss|sass)$/;
-  const sassModuleRegex = /\.(scss|sass)$/;
+  const sassModuleRegex = /\.module\.(scss|sass)$/i;
   // Source maps are resource heavy and can cause out of memory issue for large source files.
   const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
+      // 开发模式最后一步是style-loader
       isEnvDevelopment && require.resolve('style-loader'),
+      // 正式模式最后一步是MiniCssExtractPlugin.loader, 打成单独的css
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        options: paths.publicUrlOrPath.startsWith('.')
-          ? { publicPath: '../' }
-          : {},
+        // options: paths.publicUrlOrPath.startsWith('.')
+        //   ? { publicPath: '../' }
+        //   : {},
       },
       {
         loader: require.resolve('css-loader'),
-        options: cssOptions,
+        options: {
+          ...cssOptions,
+          localIdentName: 'css/[name]_[contentHash]_[local]',
+        },
       },
       {
         loader: require.resolve('postcss-loader'),
@@ -51,13 +57,13 @@ module.exports = function (webpackEnv) {
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push(
-        {
-          loader: require.resolve('resolve-url-loader'),
-          options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-            root: paths.appSrc,
-          },
-        },
+        // {
+        //   loader: require.resolve('resolve-url-loader'),
+        //   options: {
+        //     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+        //     root: paths.appSrc,
+        //   },
+        // },
         {
           loader: require.resolve(preProcessor),
           options: {
@@ -71,11 +77,14 @@ module.exports = function (webpackEnv) {
   return {
     mode: webpackEnv,
     entry: paths.appIndexJsx,
-    output: paths.appBuild,
+    output: {
+      path: paths.appBuild,
+      filename: 'js/[name].[chunkhash].bundle.js',
+    },
     resolve: {
-      extensions: ['.js', '.jsx', '.json'], // 省略扩展
+      extensions: ['.js', '.jsx', '.json', '.tsx', '.ts'], // 省略扩展
       alias: {
-        // 省略地址前缀写法@components即可
+        // 省略地址前缀写法components即可
         components: paths.components,
         pages: paths.pages,
         utils: paths.utils,
@@ -125,14 +134,14 @@ module.exports = function (webpackEnv) {
           },
         },
         {
-          test: /\.(js|mjs|jsx)$/,
+          test: /\.(js|mjs|jsx|tsx)$/,
           include: paths.appSrc,
           exclude: /node_modules/,
           use: [
             {
               loader: 'babel-loader',
               options: {
-                rootMode: 'upward', // 从当前文件向上查找node_modules目录
+                rootMode: 'root',
               },
             },
           ],
