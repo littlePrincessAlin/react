@@ -24,6 +24,10 @@ module.exports = function (webpackEnv) {
       // 正式模式最后一步是MiniCssExtractPlugin.loader, 打成单独的css
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
+        options: {
+          filename: 'css/[name].[contenthash:8].css', // 输出的文件名字
+          chunkFilename: 'css/[name].[contenthash:8].chunk.css',
+        },
         // options: paths.publicUrlOrPath.startsWith('.')
         //   ? { publicPath: '../' }
         //   : {},
@@ -32,7 +36,12 @@ module.exports = function (webpackEnv) {
         loader: require.resolve('css-loader'),
         options: {
           ...cssOptions,
-          localIdentName: 'css/[name]_[contentHash]_[local]',
+          modules: {
+            auto: true, // 自动启用 CSS 模块或者 ICSS
+            localIdentName: '[path][name]__[local]--[hash:base64:5]', // 允许配置生成的本地标识符，css后缀
+            getLocalIdent: getCSSModuleLocalIdent,
+            // sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment, // 6.x版本没有它取决于 compiler.devtool 值
+          },
         },
       },
       {
@@ -158,7 +167,6 @@ module.exports = function (webpackEnv) {
           exclude: cssModuleRegex,
           use: getStyleLoaders({
             importLoaders: 1,
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment, // 取决于 compiler.devtool 值
           }),
           // Don't consider CSS imports dead code even if the
           // containing package claims to have no side effects.
@@ -172,10 +180,6 @@ module.exports = function (webpackEnv) {
           test: cssModuleRegex,
           use: getStyleLoaders({
             importLoaders: 1,
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-            modules: {
-              getLocalIdent: getCSSModuleLocalIdent,
-            },
           }),
         },
         // Opt-in support for SASS (using .scss or .sass extensions).
@@ -187,9 +191,6 @@ module.exports = function (webpackEnv) {
           use: getStyleLoaders(
             {
               importLoaders: 3,
-              sourceMap: isEnvProduction
-                ? shouldUseSourceMap
-                : isEnvDevelopment,
             },
             'sass-loader',
           ),
@@ -206,12 +207,6 @@ module.exports = function (webpackEnv) {
           use: getStyleLoaders(
             {
               importLoaders: 3,
-              sourceMap: isEnvProduction
-                ? shouldUseSourceMap
-                : isEnvDevelopment,
-              modules: {
-                getLocalIdent: getCSSModuleLocalIdent,
-              },
             },
             'sass-loader',
           ),
