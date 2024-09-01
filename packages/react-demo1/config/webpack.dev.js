@@ -15,6 +15,10 @@ module.exports = merge(config, {
     port: '8001',
     historyApiFallback: true,
     hot: true,
-    // proxy: {},
+    proxy: [
+      {
+        '/api': 'https://192.168.124.21:3000',
+      },
+    ],
   },
 });

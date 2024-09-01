@@ -26,3 +26,17 @@
     min-height: 280;
   }
 }
+.demo__logo {
+  width: 140px;
+  height: 100%;
+  background: url(src/assets/logo.png) no-repeat center center;
+  background-size: 100%;
+  margin-right: 40px;
+}
+.login {
+  color: #ffa857;
+  font-size: 20px;
+}
+:global(.ant-menu-item-selected) {
+  background-color: #f2c090 !important;
+}

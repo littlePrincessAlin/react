@@ -97,6 +97,7 @@ module.exports = function (webpackEnv) {
         components: paths.components,
         pages: paths.pages,
         utils: paths.utils,
+        src: paths.appSrc,
       },
     },
     module: {

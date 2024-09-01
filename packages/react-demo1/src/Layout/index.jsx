@@ -1,28 +1,9 @@
 import React from 'react';
 import Styles from './index.module.scss';
-// import './app.scss'; // 不带hash
-// import './root.css'; // 直接报错
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import Router from 'src/router/index';
+import { siderMenu, headMenu } from './menu';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 const { Header, Content, Sider } = Layout;
-const siderMenu = [
-  {
-    key: 'homePage',
-    icon: React.createElement(LaptopOutlined),
-    label: '我的主页',
-    // children: new Array(4).fill(null).map((_, j) => {
-    //   const subKey = index * 4 + j + 1;
-    //   return {
-    //     key: subKey,
-    //     label: `option${subKey}`,
-    //   };
-    // }),
-  },
-];
 
 export default function App() {
   const {
@@ -31,14 +12,15 @@ export default function App() {
   return (
     <Layout className={Styles.app}>
       <Header className={Styles.app__header}>
-        <div className="demo-logo" />
+        <div className={Styles.demo__logo} />
         <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={'home'}
-          items={routes}
+          items={headMenu}
           className={Styles['app__header--menu']}
         />
+        <div className={Styles.login}>登陆</div>
       </Header>
       <Layout>
         {siderMenu && (
@@ -64,7 +46,7 @@ export default function App() {
               borderRadius: borderRadiusLG,
             }}
           >
-            <RouterProvider router={router} />
+            <Router />
           </Content>
         </Layout>
       </Layout>
