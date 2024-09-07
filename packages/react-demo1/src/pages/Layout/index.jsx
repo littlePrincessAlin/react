@@ -1,6 +1,6 @@
 import React from 'react';
 import Styles from './index.module.scss';
-import Router from 'src/router/index';
+import { Outlet } from 'react-router-dom';
 import { siderMenu, headMenu } from './menu';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 const { Header, Content, Sider } = Layout;
@@ -46,7 +46,7 @@ export default function App() {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Router />
+            <Outlet />
           </Content>
         </Layout>
       </Layout>
