@@ -33,10 +33,10 @@ instance.interceptors.response.use(
   },
 );
 
-export const fetchApi = ({ method, url, data }) => {
+export const fetchApi = ({ method, url, params }) => {
   return instance({
     method: method || 'get',
     url,
-    [method === 'get' ? 'params' : 'data']: data,
+    [method === 'get' ? 'params' : 'data']: params,
   });
 };

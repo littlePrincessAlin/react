@@ -18,7 +18,7 @@ module.exports = merge(config, {
     proxy: [
       {
         context: ['/api'],
-        target: 'http://192.168.124.21:3000/',
+        target: 'http://192.168.124.21:3000',
         changeOrigin: true,
       },
     ],

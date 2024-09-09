@@ -18,6 +18,7 @@ export default function Router() {
 
   // 如果登陆了，直接重定向到home页；如果未登陆，重定向到login页
   const redirectIfUser = async () => {
+    if (userInfo) return null;
     try {
       const { data, code } = await permission();
       if (data) {

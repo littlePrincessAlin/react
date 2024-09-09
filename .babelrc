@@ -17,6 +17,7 @@
     // "@babel/plugin-proposal-nullish-coalescing-operator",
     // 适配器
     // ["@babel/plugin-proposal-decorators", { "legacy": true }],
+
     // 打包优化，压缩包体积、语法垫片、按需引入
     [
       "@babel/plugin-transform-runtime",
